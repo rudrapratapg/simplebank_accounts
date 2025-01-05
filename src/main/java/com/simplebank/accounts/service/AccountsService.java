@@ -13,6 +13,6 @@ public interface AccountsService {
 
     boolean updateAccount(CustomerDto customerDto);
 
-    void deleteAccount(String phoneNumber);
+    boolean deleteAccount(String phoneNumber);
 
 }
