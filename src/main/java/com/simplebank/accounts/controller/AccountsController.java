@@ -80,7 +80,14 @@ public class AccountsController {
     @Operation(summary = "Delete an account", description = "Delete an account with the given mobile number")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Account deleted successfully"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(
+                        mediaType = "application/json",
+                        schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
     })
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteAccount(@RequestParam
