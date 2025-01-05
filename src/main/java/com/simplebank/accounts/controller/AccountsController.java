@@ -4,21 +4,25 @@ import com.simplebank.accounts.constants.AccountsConstants;
 import com.simplebank.accounts.dto.CustomerDto;
 import com.simplebank.accounts.dto.ResponseDto;
 import com.simplebank.accounts.service.AccountsService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
+@Validated
 public class AccountsController {
 
     private AccountsService accountsService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
         accountsService.createAccount(customerDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -26,7 +30,9 @@ public class AccountsController {
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<CustomerDto> fetchAccount(@RequestParam String mobileNumber) {
+    public ResponseEntity<CustomerDto> fetchAccount(@RequestParam
+                                                        @Pattern(regexp = "^[0-9]{10}$", message = "Mobile number should be 10 digits")
+                                                        String mobileNumber) {
         CustomerDto customerDto = accountsService.fetchAccount(mobileNumber);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -34,7 +40,7 @@ public class AccountsController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ResponseDto> updateAccount(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<ResponseDto> updateAccount(@Valid @RequestBody CustomerDto customerDto) {
         boolean isUpdated = accountsService.updateAccount(customerDto);
         if(isUpdated){
             return ResponseEntity
@@ -48,7 +54,9 @@ public class AccountsController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteAccount(@RequestParam String mobileNumber) {
+    public ResponseEntity<ResponseDto> deleteAccount(@RequestParam
+                                                         @Pattern(regexp = "^[0-9]{10}$", message = "Mobile number should be 10 digits")
+                                                         String mobileNumber) {
         accountsService.deleteAccount(mobileNumber);
         return ResponseEntity
                 .status(HttpStatus.OK)
