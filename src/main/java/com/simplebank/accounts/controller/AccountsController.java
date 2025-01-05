@@ -54,6 +54,7 @@ public class AccountsController {
     @Operation(summary = "Update an account", description = "Update an account with the given details")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Account updated successfully"),
+            @ApiResponse(responseCode = "417", description = "Expectation failed"),
             @ApiResponse(
                     responseCode = "500",
                     description = "Internal server error",
@@ -73,13 +74,14 @@ public class AccountsController {
         } else {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
+                    .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_UPDATE));
         }
     }
 
     @Operation(summary = "Delete an account", description = "Delete an account with the given mobile number")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Account deleted successfully"),
+            @ApiResponse(responseCode = "417", description = "Expectation failed"),
             @ApiResponse(
                     responseCode = "500",
                     description = "Internal server error",
@@ -101,7 +103,7 @@ public class AccountsController {
         } else {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
+                    .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_DELETE));
         }
     }
 }
