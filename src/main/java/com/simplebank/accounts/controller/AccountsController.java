@@ -2,9 +2,12 @@ package com.simplebank.accounts.controller;
 
 import com.simplebank.accounts.constants.AccountsConstants;
 import com.simplebank.accounts.dto.CustomerDto;
+import com.simplebank.accounts.dto.ErrorResponseDto;
 import com.simplebank.accounts.dto.ResponseDto;
 import com.simplebank.accounts.service.AccountsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -51,7 +54,14 @@ public class AccountsController {
     @Operation(summary = "Update an account", description = "Update an account with the given details")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Account updated successfully"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(
+                        mediaType = "application/json",
+                        schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
     })
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateAccount(@Valid @RequestBody CustomerDto customerDto) {
