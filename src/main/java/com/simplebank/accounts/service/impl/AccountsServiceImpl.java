@@ -13,6 +13,7 @@ import com.simplebank.accounts.mapper.CustomerMapper;
 import com.simplebank.accounts.repository.AccountsRepository;
 import com.simplebank.accounts.repository.CustomerRepository;
 import com.simplebank.accounts.service.AccountsService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ public class AccountsServiceImpl implements AccountsService {
      * @param customerDto CustomerDto
      */
     @Override
+    @Transactional
     public void createAccount(CustomerDto customerDto) {
         Customer customer = CustomerMapper.mapsToCustomer(customerDto, new Customer());
         customerRepository.findByMobileNumber(customer.getMobileNumber())
@@ -71,6 +73,7 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
+    @Transactional
     public boolean updateAccount(CustomerDto customerDto) {
         if(customerDto!=null){
             Accounts account = accountsRepository.findByAccountNumber(customerDto.getAccountsDto().getAccountNumber())
@@ -88,6 +91,7 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
+    @Transactional
     public boolean deleteAccount(String phoneNumber) {
         boolean deleted=false;
         try {

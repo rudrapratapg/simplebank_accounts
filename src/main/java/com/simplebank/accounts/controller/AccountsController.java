@@ -70,7 +70,7 @@ public class AccountsController {
         if(isUpdated){
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
+                    .body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201_UPDATE));
         } else {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)

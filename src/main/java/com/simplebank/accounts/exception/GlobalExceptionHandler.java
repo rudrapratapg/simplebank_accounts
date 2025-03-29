@@ -24,7 +24,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(
-                request.getDescription(false),
+                request.getDescription(false), //Passing false here will only give api path, but passing true will give a lot of things, including ip address
                 HttpStatus.NOT_FOUND,
                 ex.getMessage(),
                 LocalDateTime.now()
